@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+            .row {
+                flex-flow: row;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+            }
+            .target {
+                image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+                image-rendering: -moz-crisp-edges;          /* Firefox                        */
+                image-rendering: -o-crisp-edges;            /* Opera                          */
+                image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+                image-rendering: pixelated;                 /* Universal support since 2021   */
+                image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+                -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+            }
+            /*
+            #container > img {}
+            #original {}
+            #modified {}
+            */
+        </style>
+    </head>
+   <body>
+        <div id="container">
+            <!--
+            <div class="row">
+                <img src="../images/busbpxpeshdvil9oimjd_male.png" class="source">
+                <canvas class="target"></canvas>
+            </div>
+            -->
+        </div>
+        <script>
+
+            const CONFIGS = {
+                "nukke-1": {
+                    count: 1,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 5,
+                        "data-minimum-threshold": 5
+                    }
+                },
+                "nukke-2": {
+                    count: 2,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 5,
+                        "data-minimum-threshold": 5
+                    }
+                },
+                "sagasd": {
+                    count: 4,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 12,
+                        "data-minimum-threshold": 1,
+                    }
+                },
+                "asfgasd": {
+                    count: 5,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 7,
+                        "data-minimum-threshold": 5
+                    }
+                },
+                "megayhdistelma": {
+                    count: 2,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 100,
+                        "data-minimum-threshold": 5
+                    }
+                }
+            };
+            
+            const CONFIG_KEY = "nukke-2";
+
+            let COUNT = CONFIGS[CONFIG_KEY].count;
+            let IMAGE = CONFIG_KEY; //; "asfgasd" // "srdy"; //"busbpxpeshdvil9oimjd";
+
+            let blockSize        = CONFIGS[CONFIG_KEY].default_attributes?.["data-block-size"] || 2;
+            let maximumColors    = CONFIGS[CONFIG_KEY].default_attributes?.["data-maximum-colors"] || 10;
+            let minimumThreshold = CONFIGS[CONFIG_KEY].default_attributes?.["data-minimum-threshold"] || 2;
+
+            let attributes = [{
+                "data-block-size": blockSize,
+                "data-maximum-colors": maximumColors,
+                "data-minimum-threshold": minimumThreshold,
+            },{
+                // "data-maximum-colors": 12, // srdy
+                //"data-maximum-colors": 4, //asfgasd 
+            },{
+                //"data-maximum-colors": 4, //asfgasd
+            }];
+            
+            let imageDir = `../images/${IMAGE}/`;
+
+            let container = document.getElementById("container");
+
+            for (let i = 1; i <= COUNT; i++) {
+                let row = document.createElement("div");
+                row.classList.add("row");
+                container.appendChild(row);
+
+                let source = document.createElement("img");
+                source.src = `${imageDir}${i}.png`;
+                source.classList.add("source");
+
+                let attrs = {
+                    ...attributes[0],
+                    ...attributes[i]
+                };
+
+                for (let attr in attrs) source.setAttribute(attr, attrs[attr]);
+                
+                row.appendChild(source);
+
+
+                let target = document.createElement("canvas");
+                target.classList.add("target");
+                row.appendChild(target);
+            }
+        </script>
+        <script src="index.js"></script>
+    </body>
+</html>
