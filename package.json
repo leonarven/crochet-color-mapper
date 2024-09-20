@@ -1,0 +1,13 @@
+{
+  "name": "crochet-color-mapper",
+  "version": "1.0.0",
+  "description": "0. Generate target image 1. Copy it to ./images/default/1.png 2. Serve ./build via http server (Using as file:///.../build/index.html not acceptable due to canvas handling) 3. Open index.html 4. Profit!",
+  "scripts": {
+    "build": "esbuild --bundle src/index.ts --outfile=build/index.js",
+    "serve": "http-server ./ --port 3009"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1",
+    "http-server": "^14.1.1"
+  }
+}

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Crochet Color Mapper</title>
         <style>
             html, body {
                 margin: 0;
@@ -14,6 +14,9 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 1rem;
+            }
+            .row.controls {
+                justify-content: center;
             }
             .target {
                 image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
@@ -43,6 +46,14 @@
         <script>
 
             const CONFIGS = {
+                "default": {
+                    count: 1,
+                    default_attributes: {
+                        "data-block-size": 2,
+                        "data-maximum-colors": 15,
+                        "data-minimum-threshold": 5
+                    }
+                },
                 "nukke-1": {
                     count: 1,
                     default_attributes: {
@@ -85,7 +96,7 @@
                 }
             };
             
-            const CONFIG_KEY = "nukke-2";
+            const CONFIG_KEY = "default";
 
             let COUNT = CONFIGS[CONFIG_KEY].count;
             let IMAGE = CONFIG_KEY; //; "asfgasd" // "srdy"; //"busbpxpeshdvil9oimjd";
@@ -110,10 +121,11 @@
             let container = document.getElementById("container");
 
             for (let i = 1; i <= COUNT; i++) {
+
                 let row = document.createElement("div");
                 row.classList.add("row");
                 container.appendChild(row);
-
+            
                 let source = document.createElement("img");
                 source.src = `${imageDir}${i}.png`;
                 source.classList.add("source");
@@ -128,9 +140,26 @@
                 row.appendChild(source);
 
 
+
+                let ctrl_row = document.createElement("div");
+                ctrl_row.classList.add("row");
+                ctrl_row.classList.add("controls");
+                container.appendChild(ctrl_row);
+
                 let target = document.createElement("canvas");
                 target.classList.add("target");
+                target.id = `target-canvas-${i}`;
                 row.appendChild(target);
+
+
+                let run_button = document.createElement("button");
+                run_button.innerText = "Run!";
+                run_button.addEventListener("click", async () => {
+                    debugger;
+                    window.imagethingToSVG( document.querySelector(`#target-canvas-${i}`) );
+                });
+                ctrl_row.appendChild( run_button );
+
             }
         </script>
         <script src="index.js"></script>
